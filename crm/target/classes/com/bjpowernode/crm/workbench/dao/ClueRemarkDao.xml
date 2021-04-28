@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bjpowernode.crm.workbench.dao.ClueRemarkDao">
+	
+  	<select id="selectRemarkByClueId" resultType="com.bjpowernode.crm.workbench.domain.ClueRemark">
+        select  a.id,
+                a.noteContent,
+                u1.name as createBy,
+                a.createTime,
+                u2.name as editBy,
+                a.editTime,
+                a.editFlag,
+                a.clueId
+        from tbl_clue_remark as a
+            left join tbl_user as u1 on a.createBy = u1.id
+            left join tbl_user as u2 on a.editBy = u2.id
+        where clueId = #{clueId}
+        order by a.createTime
+
+    </select>
+
+    <insert id="insertClueRemark">
+        insert into tbl_clue_remark (
+                id,
+                noteContent,
+                createBy,
+                createTime,
+                editFlag,
+                clueId
+        )values (#{id},#{noteContent},#{createBy},#{createTime},#{editFlag},#{clueId})
+    </insert>
+
+    <select id="selectRemarkById" resultType="com.bjpowernode.crm.workbench.domain.ClueRemark">
+        select  a.id,
+                a.noteContent,
+                u1.name as createBy,
+                a.createTime,
+                u2.name as editBy,
+                a.editTime,
+                a.editFlag,
+                a.clueId
+        from tbl_clue_remark as a
+        left join tbl_user as u1 on a.createBy = u1.id
+        left join tbl_user as u2 on a.editBy = u2.id
+        where a.id = #{id}
+
+    </select>
+
+    <delete id="deleteRemark">
+        delete from tbl_clue_remark where id = #{id}
+    </delete>
+
+    <select id="selectRemarkCount" resultType="int">
+        select count(*) from tbl_clue_remark where clueId=#{id}
+    </select>
+
+    <delete id="deleteRemarkByClueId">
+        delete from tbl_clue_remark where clueId = #{id}
+    </delete>
+
+    <select id="selectRemarkCountByIds" resultType="int">
+        select count(*) from tbl_clue_remark where clueId in
+            <foreach collection="array" item="clueId" open="(" close=")" separator=",">
+                #{clueId}
+            </foreach>
+    </select>
+
+    <delete id="deleteRemarkByIds">
+        delete from tbl_clue_remark where clueId in
+        <foreach collection="array" item="clueId" open="(" close=")" separator=",">
+            #{clueId}
+        </foreach>
+    </delete>
+
+    <select id="getListByClueId" resultType="com.bjpowernode.crm.workbench.domain.ClueRemark">
+        select * from tbl_clue_remark where clueId=#{clueId}
+    </select>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
