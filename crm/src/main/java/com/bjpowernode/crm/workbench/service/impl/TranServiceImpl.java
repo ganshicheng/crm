@@ -173,7 +173,7 @@ public class TranServiceImpl implements TranService {
             flag = false;
         }
 
-        //生成一个交易历史
+        //生成一个交易历史tranHistory
         TranHistory th = new TranHistory();
         th.setId(UUIDUtil.getUUID());
         th.setStage(tran.getStage());
